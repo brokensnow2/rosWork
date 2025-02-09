@@ -1,0 +1,63 @@
+启动步骤：
+Step1: source ./devel/setup.bash
+Step2: roslaunch pkg start.launch
+
+PS:launch文件解释见day6_Chapter4_ROSRuntimeManage
+
+如果不source ./devel/setup.bash:
+
+hanyi@Ubuntu-ACE:~/rosWork/day1_HelloWorld$ roslaunch pkg start
+RLException: [start] is neither a launch file in package [pkg] nor is [pkg] a launch file name
+The traceback for the exception was written to the log file
+
+hanyi@Ubuntu-ACE:~/rosWork/day1_HelloWorld/src/pkg/launch$ rospack profile
+Full tree crawl took 0.023660 seconds.
+Directories marked with (*) contain no manifest.  You may
+want to delete these directories.
+To get just of list of directories without manifests,
+re-run the profile with --zombie-only
+-------------------------------------------------------------
+0.022706   /opt/ros/noetic/share
+0.000118   /home/hanyi/rosWork/day1_HelloWorld/src
+
+
+hanyi@Ubuntu-ACE:~/rosWork/day1_HelloWorld/src/pkg/launch$ roslaunch pkg start
+RLException: [start] is neither a launch file in package [pkg] nor is [pkg] a launch file name
+The traceback for the exception was written to the log file
+
+hanyi@Ubuntu-ACE:~/rosWork/day1_HelloWorld$ source ./devel/setup.bash
+
+hanyi@Ubuntu-ACE:~/rosWork/day1_HelloWorld/src/pkg/launch$ roslaunch pkg start.launch
+... logging to /home/hanyi/.ros/log/13b35d58-c126-11ef-b722-edf128934b40/roslaunch-Ubuntu-ACE-5774.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+
+started roslaunch server http://Ubuntu-ACE:41113/
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    hello (pkg/helloworld)
+    key1 (turtlesim/turtle_teleop_key)
+    t1 (turtlesim/turtlesim_node)
+
+auto-starting new master
+process[master]: started with pid [5791]
+ROS_MASTER_URI=http://localhost:11311
+
+setting /run_id to 13b35d58-c126-11ef-b722-edf128934b40
+process[rosout-1]: started with pid [5802]
+started core service [/rosout]
+process[hello-2]: started with pid [5805]
+process[t1-3]: started with pid [5806]
+process[key1-4]: started with pid [5807]
+[ INFO] [1734955476.159966531]: HELLO WORLD!
+[hello-2] process has finished cleanly
+log file: /home/hanyi/.ros/log/13b35d58-c126-11ef-b722-edf128934b40/hello-2*.log

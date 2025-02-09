@@ -1,0 +1,17 @@
+<!-- 如何使用 .launch文件？ -->
+<!-- 第一步: 在功能包下创建launch文件夹，再再里面创建.launch文件 -->
+<!-- 第二步: Ctrl + Shift + B 构建整个工作空间(当然你也可以isolate build) -->
+<!-- 第三步: source ./devel/setup.bash  -->
+<!-- 第四布: roslaunch launchFile start.launch -->
+
+<!-- .launch文件具体内容 -->
+
+<!-- <launch>标签是所有 launch 文件的根标签，充当其他标签的容器 -->
+<launch> 
+
+    <!-- 可以通过rosnode list查看所有节点 -->
+    <!--   包名                     节点            日志发送目标         别名(必须)  -->
+    <node pkg = "5_1_2staticTrans" type = "tf_sub" output = "screen" name = "tsSubs" />
+
+    <node pkg="5_1_2staticTrans" type="static_brocast" output="screen" name = "tfBrocast" />
+</launch>

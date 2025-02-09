@@ -1,0 +1,12 @@
+.vscode
+
+settings.json
+c_cpp_properties.json
+
+build
+devel
+
+build_isolated
+devel_isolated
+
+install_isolated

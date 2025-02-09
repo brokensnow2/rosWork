@@ -1,0 +1,39 @@
+<!-- 如何使用 .launch文件？ -->
+<!-- 第一步: 在功能包下创建launch文件夹，再再里面创建.launch文件 -->
+<!-- 第二步: Ctrl + Shift + B 构建整个工作空间(当然你也可以isolate build) -->
+<!-- 第三步: source ./devel/setup.bash  -->
+<!-- 第四布: roslaunch launchFile start.launch -->
+
+<!-- .launch文件具体内容 -->
+
+<!-- <launch>标签是所有 launch 文件的根标签，充当其他标签的容器 -->
+<launch deprecated = "弃用声明, 告知用户当前 launch 文件已经弃用"> 
+
+    <!-- 可以通过rosnode list查看所有节点 -->
+    <!--   包名              节点                     节点别名(参数的命名空间)   日志发送目标   节点的命名空间     将参数传给节点，等同于从命令行启动时后接参数列表 -->
+    <node pkg = "turtlesim" type = "turtlesim_node" name = "myTurtle" output = "screen" ns = "nodespace1" args = "" >
+
+
+        <!-- node标签子标签 用于话题重命名-->
+        <!-- 可以使用rostopic list 来查看所有主题 -->
+        <remap from = "turtle1/cmd_vel" to = "cmd_vel"/>
+
+
+        <!-- 当param标签作为node子标签，该参数作为节点命名空间的私有参数
+        相当于加了私有命名空间(前缀: /myTurtle) -->
+        <!-- 可使用rosparam list 查看所有参数 -->
+        <!-- rosparam get /myTurtle/Param_B 查看参数内容-->
+        <param name = "Param_B" type = "double" value = "3.14"/>
+    </node>
+
+    <!-- 全局参数，ros会自动推测value类型 -->
+    <param name = "Param_A" value = "100" />
+
+    <!-- <arg>标签是用于动态传参，类似于函数的参数，可以增强launch文件的灵活性 -->
+    <arg name = "length" value = "55.5" doc = "我是参数说明" />
+    <!-- param标签 的固定写法 value="$(arg xxx)" -->
+    <param name = "Param_C" value = "$(arg length)" />
+    <param name = "Param_D" value = "$(arg length)" />
+
+    <node pkg="turtlesim" type="turtle_teleop_key"  name="myTurtleContro" output="screen" />
+</launch>

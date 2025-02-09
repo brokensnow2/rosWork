@@ -1,0 +1,80 @@
+<launch>
+    <!-- 定义使用仿真时间，通常用于 Gazebo 等仿真器 -->
+    <param name="use_sim_time" value="true"/>
+    
+    <!-- 启动 gmapping 节点，用于运行 SLAM 算法 -->
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+        <!-- 话题重映射：scan 保持默认名称 -->
+        <remap from="scan" to="scan"/>
+        
+        <!-- 设置底盘坐标系 -->
+        <param name="base_frame" value="base_footprint"/>
+        <!-- 设置里程计坐标系 -->
+        <param name="odom_frame" value="odom"/>
+        <!-- 地图更新的时间间隔（秒） -->
+        <param name="map_update_interval" value="5.0"/>
+        <!-- 激光雷达的最大有效范围（单位：米） -->
+        <param name="maxUrange" value="16.0"/>
+        <!-- 传感器测量噪声的标准差 -->
+        <param name="sigma" value="0.05"/>
+        <!-- 优化时用于计算平滑卷积核的大小 -->
+        <param name="kernelSize" value="1"/>
+        <!-- 平移步长（线性位移步长） -->
+        <param name="lstep" value="0.05"/>
+        <!-- 旋转步长（角度变化步长） -->
+        <param name="astep" value="0.05"/>
+        <!-- 优化迭代的最大次数 -->
+        <param name="iterations" value="5"/>
+        <!-- 平移噪声的标准差 -->
+        <param name="lsigma" value="0.075"/>
+        <!-- 优化算法的增益参数 -->
+        <param name="ogain" value="3.0"/>
+        <!-- 设置激光数据跳过的束数 -->
+        <param name="lskip" value="0"/>
+        <!-- 运动模型中的噪声参数 -->
+        <param name="srr" value="0.1"/>
+        <param name="srt" value="0.2"/>
+        <param name="str" value="0.1"/>
+        <param name="stt" value="0.2"/>
+        <!-- 机器人直线位移超过指定距离后更新地图 -->
+        <param name="linearUpdate" value="1.0"/>
+        <!-- 机器人旋转角度超过指定角度后更新地图 -->
+        <param name="angularUpdate" value="0.5"/>
+        <!-- 强制触发地图更新的时间间隔 -->
+        <param name="temporalUpdate" value="3.0"/>
+        <!-- 粒子滤波器的重采样阈值 -->
+        <param name="resampleThreshold" value="0.5"/>
+        <!-- 粒子滤波器的粒子数 -->
+        <param name="particles" value="30"/>
+        <!-- 设置生成地图的边界范围 -->
+        <param name="xmin" value="-50.0"/>
+        <param name="ymin" value="-50.0"/>
+        <param name="xmax" value="50.0"/>
+        <param name="ymax" value="50.0"/>
+        <!-- 地图分辨率（每格的大小，单位：米） -->
+        <param name="delta" value="0.05"/>
+        <!-- 采样范围和平移步长 -->
+        <param name="llsamplerange" value="0.01"/>
+        <param name="llsamplestep" value="0.01"/>
+        <!-- 采样范围和旋转步长 -->
+        <param name="lasamplerange" value="0.005"/>
+        <param name="lasamplestep" value="0.005"/>
+    </node>
+
+    <!-- 下面全都注释因为在car.launch已经启动了 -->
+
+    <!-- 启动 joint_state_publisher 节点，用于发布机器人关节状态 -->
+    <!-- <node pkg="joint_state_publisher" name="joint_state_publisher" type="joint_state_publisher" /> -->
+
+    <!-- 启动 robot_state_publisher 节点，用于广播 TF 坐标变换信息 -->
+    <!-- <node pkg="robot_state_publisher" name="robot_state_publisher" type="robot_state_publisher" /> -->
+
+    <!-- 启动 rviz 可视化工具 -->
+    <!-- <node pkg="rviz" type="rviz" name="rviz" /> -->
+    
+    <!-- 
+    可选：加载自定义 rviz 配置文件
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find my_nav_sum)/rviz/gmapping.rviz"/>
+    -->
+</launch>
+

@@ -1,0 +1,55 @@
+<!-- 创建一个机器人模型(盒状即可)，显示在 Gazebo 中 -->
+<robot name = "mycar">
+
+    <!-- 定义一个链接（link），这是机器人中的一个组成部分 -->
+    <link name = "base_link">
+
+        <!-- 可视化部分，定义机器人外观 -->
+        <visual>
+            <geometry>
+
+                <!-- 机器人模型的几何体，使用一个盒状模型，大小为 0.5 x 0.2 x 0.1 米 -->
+                <box size = "0.5 0.2 0.1" />
+
+            </geometry>
+
+            <!-- 设置几何体相对于父坐标系的原点位置和旋转角度（此处均为0） -->
+            <origin xyz = "0.0 0.0 0.0" rpy = "0.0 0.0 0.0" />
+
+            <!-- 设置材料属性，此处指定了一个黄色的材质 -->
+            <material name = "yellow">
+                <!-- 设置颜色为 RGB 为 (0.5, 0.3, 0.0)，透明度为 1 -->
+                <color rgba = "0.5 0.3 0.0 1" />
+            </material>
+        
+        </visual>
+        <!-- 碰撞部分，定义机器人模型与其他物体的碰撞形状 -->
+        <collision>
+            <!-- 碰撞范围与几何体部分一致，大小为 0.5 x 0.2 x 0.1 米 -->
+            <geometry>
+                <box size = "0.5 0.2 0.1" />
+            </geometry>
+            <!-- 设置碰撞几何体相对于父坐标系的位置和旋转角度（此处均为0） -->
+            <origin xyz = "0.0 0.0 0.0" rpy = "0.0 0.0 0.0" />
+        </collision>
+        <!-- 惯性部分，定义机器人的质量和惯性特性 -->
+        <inertial>
+            <!-- 设置惯性相对于父坐标系的位置 -->
+            <origin xyz = "0 0 0" />
+            <!-- 设置机器人的质量为 6 千克 -->
+            <mass value = "6" />
+            <!-- 设置机器人在各个轴向的惯性矩阵 -->
+            <!-- 惯性矩阵自己去ChatGPT -->
+            <!-- 惯性矩阵的设置需要结合link的质量与外形参数动态生成，标准的球体、圆柱与立方体的惯性矩阵公式已经封装为 xacro 实现 -->
+            <inertia ixx = "1" ixy = "0" ixz = "0" iyy = "1" iyz = "0" izz = "1" />
+        </inertial>
+    </link>
+
+    <!-- Gazebo 模拟环境中的额外设置 -->
+    <!-- 在 gazebo 中显示 link 的颜色，必须要使用指定的标签:<gazebo reference="link节点名称"> -->
+    <gazebo reference = "base_link">
+        <!-- 设置机器人模型在 Gazebo 中的材质为黑色 -->
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+</robot>

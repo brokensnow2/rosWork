@@ -1,0 +1,4 @@
+<launch>
+    <node pkg = "5_1_3dynamicTrans" type = "dynamic_tf_pub" name = "dynamic_tf_pub" output = "screen" />
+    <node pkg = "5_1_3dynamicTrans" type = "dynamic_tf_sub" name = "dynamic_tf_sub" output = "screen" />
+</launch>

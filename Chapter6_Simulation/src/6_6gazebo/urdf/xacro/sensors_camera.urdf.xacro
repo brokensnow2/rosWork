@@ -1,0 +1,64 @@
+<robot name="my_sensors" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- 摄像头传感器配置 -->
+  <gazebo reference="camera">
+    <!-- 定义传感器类型为摄像头（camera），名称为 camera_node -->
+    <sensor type="camera" name="camera_node">
+      <!-- 设置摄像头的更新频率，单位为 Hz -->
+      <update_rate>30.0</update_rate>
+      
+      <!-- 摄像头的基本属性配置 -->
+      <camera name="head">
+        <!-- 摄像头的水平视场角（FOV），单位为弧度 -->
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <!-- 图像宽度，单位为像素 -->
+          <width>1280</width>
+          <!-- 图像高度，单位为像素 -->
+          <height>720</height>
+          <!-- 图像格式，R8G8B8 表示 RGB 每个通道 8 位 -->
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <!-- 摄像头的最近剪裁距离，单位为米 -->
+          <near>0.02</near>
+          <!-- 摄像头的最远剪裁距离，单位为米 -->
+          <far>300</far>
+        </clip>
+        <noise>
+          <!-- 噪声类型设置为高斯分布 -->
+          <type>gaussian</type>
+          <!-- 噪声的均值 -->
+          <mean>0.0</mean>
+          <!-- 噪声的标准差 -->
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      
+      <!-- 摄像头核心插件配置 -->
+      <plugin name="gazebo_camera" filename="libgazebo_ros_camera.so">
+        <!-- 插件始终启用 -->
+        <alwaysOn>true</alwaysOn>
+        <!-- 插件的更新频率（0.0 表示跟随仿真步） -->
+        <updateRate>0.0</updateRate>
+        <!-- 摄像头名称 -->
+        <cameraName>/camera</cameraName>
+        <!-- 图像话题名称 -->
+        <imageTopicName>image_raw</imageTopicName>
+        <!-- 摄像头信息话题名称 -->
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <!-- 摄像头的坐标系名称 -->
+        <frameName>camera</frameName>
+        <!-- 摄像头基线，用于双目摄像头模拟，单位为米 -->
+        <hackBaseline>0.07</hackBaseline>
+        <!-- 镜头畸变参数，K1、K2、K3 为径向畸变，T1、T2 为切向畸变 -->
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

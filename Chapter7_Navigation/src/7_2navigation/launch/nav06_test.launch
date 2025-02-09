@@ -1,0 +1,11 @@
+<!-- 集成导航相关的launch文件 -->
+<launch>
+    <!-- 小车, rviz, gazebo,发布TF 在6_6gazebo包中 -->
+    <include file = "$(find 6_6gazebo)/launch/car.launch" />
+    <!-- 加载地图服务 -->
+    <include file = "$(find 7_2navigation)/launch/nav03_map_server.launch" />
+    <!-- amcl文件 -->
+    <include file = "$(find 7_2navigation)/launch/nav04_amcl.launch" />
+    <!-- move_base -->
+    <include file = "$(find 7_2navigation)/launch/nav05_path.launch" />
+</launch>

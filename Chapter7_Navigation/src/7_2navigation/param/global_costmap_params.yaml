@@ -1,0 +1,10 @@
+global_costmap:  # 配置全局代价地图（global_costmap）的参数
+
+  global_frame: map  # 全局代价地图的参考坐标系，通常为地图的全局坐标系 "map"
+  robot_base_frame: base_footprint  # 机器人底座的坐标系，用于确定机器人在地图中的位置
+
+  update_frequency: 1.0  # 地图更新频率（单位：Hz），控制地图数据的刷新速度
+  publish_frequency: 1.0  # 地图发布频率（单位：Hz），控制代价地图的发布速度，供其他模块订阅使用
+  transform_tolerance: 0.5  # 坐标变换的时间容差（单位：秒），用于处理坐标系之间的延迟问题
+
+  static_map: true  # 是否使用静态地图（如通过 SLAM 或已知地图生成的栅格地图）

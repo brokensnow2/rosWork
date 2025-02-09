@@ -1,0 +1,87 @@
+<robot name="my_car_move" xmlns:xacro="http://wiki.ros.org/xacro"> 
+    <!-- 定义一个名为 my_car_move 的机器人，使用 xacro 文件语法 -->
+
+    <!-- 传动实现:用于连接控制器与关节 -->
+
+    <!-- 定义一个宏 joint_trans，用于配置传动系统，参数为 joint_name -->
+    <!-- Transmission is important to link the joints and the controller -->
+    <xacro:macro name="joint_trans" params="joint_name">
+
+        <!-- 定义一个传动装置，其名称基于关节名 joint_name -->
+        <transmission name="${joint_name}_trans">
+
+            <!-- 指定传动类型为简单传动 -->
+            <type>transmission_interface/SimpleTransmission</type>
+
+            <!-- 定义关节 joint_name -->    
+            <joint name="${joint_name}">
+
+                <!-- 关节使用速度接口 -->
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+
+            <!-- 定义执行器，名称为 joint_name_motor -->
+            <actuator name="${joint_name}_motor">
+
+                <!-- 执行器也使用速度接口 -->
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+
+                <!-- 机械传动比为 1，表示 1:1 的传动 -->
+                <mechanicalReduction>1</mechanicalReduction>       
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+    <!-- 每一个驱动轮都需要配置传动装置 -->
+    <xacro:joint_trans joint_name="left_wheel2base_link" />
+    <!-- 使用宏 joint_trans 配置左轮的传动装置 -->
+    <xacro:joint_trans joint_name="right_wheel2base_link" />
+    <!-- 使用宏 joint_trans 配置右轮的传动装置 -->
+
+    <!-- 控制器 -->
+    <gazebo>
+        <!-- 配置 Gazebo 的插件 -->
+        <!-- 定义一个差速驱动插件 -->
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+
+            <!-- 设置 ROS 调试等级为 Debug -->
+            <rosDebugLevel>Debug</rosDebugLevel>
+            <!-- 发布车轮的 TF 信息 -->
+            <publishWheelTF>true</publishWheelTF>
+            <!-- 定义机器人命名空间 -->
+            <robotNamespace>/</robotNamespace>
+            <!-- 是否发布 TF 数据 -->
+            <publishTf>1</publishTf>
+            <!-- 发布车轮关节状态 -->
+            <publishWheelJointState>true</publishWheelJointState>
+            <!-- 插件是否始终处于激活状态 -->
+            <alwaysOn>true</alwaysOn>
+            <!-- 插件的更新频率设置为 100 Hz -->
+            <updateRate>100.0</updateRate>
+            <!-- 使用兼容模式运行 -->
+            <legacyMode>true</legacyMode>
+            <!-- 定义左轮的关节 -->
+            <leftJoint>left_wheel2base_link</leftJoint>
+            <!-- 定义右轮的关节 -->
+            <rightJoint>right_wheel2base_link</rightJoint>
+            <!-- 车轮间距，基于底盘半径计算 -->
+            <wheelSeparation>${base_link_radius * 2}</wheelSeparation>
+            <!-- 车轮直径，基于车轮半径计算 -->
+            <wheelDiameter>${wheel_radius * 2}</wheelDiameter>
+            <!-- 是否广播 TF 信息 -->
+            <broadcastTF>1</broadcastTF>
+            <!-- 定义车轮最大扭矩为 30 -->
+            <wheelTorque>30</wheelTorque>
+            <!-- 定义车轮的最大加速度为 1.8 -->
+            <wheelAcceleration>1.8</wheelAcceleration>
+            <!-- 指定用于接收速度指令的 ROS 话题 -->
+            <commandTopic>cmd_vel</commandTopic>
+            <!-- 定义里程计的坐标系 -->
+            <odometryFrame>odom</odometryFrame>
+            <!-- 定义发布里程计数据的 ROS 话题 -->
+            <odometryTopic>odom</odometryTopic>
+            <!-- 定义机器人根坐标系的名称 -->
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+        </plugin>
+    </gazebo>
+</robot>

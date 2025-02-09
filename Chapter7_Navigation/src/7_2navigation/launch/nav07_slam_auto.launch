@@ -1,0 +1,10 @@
+<launch>
+
+    <!-- 小车, rviz, gazebo,发布TF 在6_6gazebo包中 -->
+    <include file = "$(find 6_6gazebo)/launch/car.launch" />
+    <!-- 启动SLAM节点 -->
+    <include file="$(find 7_2navigation)/launch/nav01_slam.launch" />
+    <!-- 运行move_base节点 -->
+    <include file="$(find 7_2navigation)/launch/nav05_path.launch" />
+
+</launch>

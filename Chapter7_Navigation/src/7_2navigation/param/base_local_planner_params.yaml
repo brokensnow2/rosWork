@@ -1,0 +1,45 @@
+TrajectoryPlannerROS:  # TrajectoryPlannerROS 模块的配置，主要用于轨迹规划
+
+# Robot Configuration Parameters
+  max_vel_x: 0.5  # 机器人前进方向的最大线速度（单位：米/秒）
+  min_vel_x: 0.08  # 机器人前进方向的最小线速度（单位：米/秒）
+
+  max_vel_theta: 1.0  # 机器人最大角速度（单位：弧度/秒）
+  min_vel_theta: -1.0  # 机器人最小角速度（单位：弧度/秒，负值表示逆时针）
+  min_in_place_vel_theta: 1.0  # 原地旋转的最小角速度（单位：弧度/秒）
+
+  acc_lim_x: 1.0  # 机器人在 x 方向上的最大加速度（单位：米/秒²）
+  acc_lim_y: 0.0  # 机器人在 y 方向上的最大加速度（单位：米/秒²，差速驱动机器人通常为 0）
+  acc_lim_theta: 0.6  # 机器人角速度的最大加速度（单位：弧度/秒²）
+
+# Goal Tolerance Parameters
+  xy_goal_tolerance: 0.10  # 机器人到目标点的平面位置容差（单位：米），低于该值视为到达目标
+  yaw_goal_tolerance: 0.05  # 机器人到目标点的方向角容差（单位：弧度），低于该值视为方向角对准目标
+
+# Differential-drive robot configuration
+  holonomic_robot: false  # 指定机器人是否为全向移动机器人（差速驱动机器人为 false）
+
+# Forward Simulation Parameters
+  sim_time: 0.8  # 前向仿真的时间窗口（单位：秒），机器人生成的轨迹模拟多远的未来
+  vx_samples: 18  # 仿真时对 x 方向速度进行的采样点数（用于生成轨迹）
+  vtheta_samples: 20  # 仿真时对角速度进行的采样点数（用于生成轨迹）
+  sim_granularity: 0.05  # 仿真轨迹的粒度（单位：米），表示轨迹中点之间的距离
+
+# 关键点解析：
+
+#     线速度与角速度限制 (max_vel_x, min_vel_x, max_vel_theta, 等)
+#     控制机器人的速度范围，避免运动过快或过慢。
+
+#     加速度限制 (acc_lim_x, acc_lim_theta, 等)
+#     定义机器人运动时的加速度范围，用于平滑控制。
+
+#     目标容差 (xy_goal_tolerance, yaw_goal_tolerance)
+#     设定机器人到达目标点的位置与方向精度要求。
+
+#     是否为全向机器人 (holonomic_robot)
+#     如果机器人是差速驱动（如轮式机器人），设置为 false。
+
+#     前向仿真参数
+#         sim_time 决定机器人生成轨迹时预测的未来时间窗口。
+#         vx_samples 和 vtheta_samples 设定在仿真中对线速度和角速度的采样数量。
+#         sim_granularity 决定仿真轨迹的精细程度。

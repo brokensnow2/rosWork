@@ -1,0 +1,13 @@
+<!-- 测试amcl -->
+<launch>
+    <!-- 启动rviz,但在6_6gazebo包的car.launch文件已经启动了 -->
+    <!-- 
+    <node pkg = "joint_state_publisher" type = "joint_state_publisher" name = "joint_state_publisher" />
+    <node pkg = "robot_state_publisher" type = "robot_state_publisher" name = "robot_state_publisher" />
+    <node pkg = "rviz" type = "rviz" name = "rviz" args = "-d $(find 7_2navigation)/config/car.rviz" /> 
+    -->
+    <!-- 加载地图服务 -->
+    <include file = "$(find 7_2navigation)/launch/nav03_map_server.launch" />
+    <!-- amcl文件 -->
+    <include file = "$(find 7_2navigation)/launch/nav04_amcl.launch" />
+</launch>

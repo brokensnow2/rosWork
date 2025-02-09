@@ -1,0 +1,7 @@
+digraph G {
+"base_link" -> "camera"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.185 Hz\nMost recent transform: 1736327166.029 ( 0.086 sec old)\nBuffer length: 4.811 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1736327166.115"[ shape=plaintext ] ;
+ }->"base_link";
+}

@@ -1,0 +1,28 @@
+<launch>
+
+    <!-- 设置参数 固定写法 -->
+    <!-- textfile 是一个特殊的用法，用来加载一个文件的内容作为参数值，尤其是用来加载 URDF 文件或类似的配置文件。 -->
+    <param name = "robot_description" textfile = "$(find 6_2urdf_rviz)/urdf/urdf/demo03_joint.urdf" />
+
+    <!-- 启动 rviz  -d 参数用于指定 RViz 启动时加载的配置文件 -->
+    <node pkg = "rviz" type = "rviz" name = "rviz" args="-d $(find 6_2urdf_rviz)/config/rviz/show_mycar.rviz" />
+
+    <!-- 
+        只有上述两条语句：
+        表现：摄像头显示与颜色异常
+        提示：No transform from [camera] to [base_link] 缺少 camera 到 base_link 的坐标转换
+
+        原因：rviz 中显示 URDF 时，必须发布不同部件之间的坐标系关系
+        解决：ROS中提供了关于机器人的模型显示的坐标发布相关节点
+     -->
+
+    <!-- 添加关节状态发布节点 -->
+    <node pkg = "joint_state_publisher" type = "joint_state_publisher" name = "joint_state_publisher" />
+
+    <!-- 添加机器人状态发布节点 -->
+    <node pkg = "robot_state_publisher" type = "robot_state_publisher" name = "robot_state_publisher" />
+
+    <!-- 可选:用于控制关节运动的节点 -->
+    <!-- <node pkg = "joint_state_publisher_gui" type = "joint_state_publisher_gui" name = "joint_state_publisher_gui" /> -->
+
+</launch>

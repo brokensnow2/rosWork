@@ -1,0 +1,52 @@
+<!-- 定义机器人名称为 "base"，并使用 xacro 的命名空间 -->
+<robot name = "base" xmlns:xacro = "http://wiki.ros.org/xacro">
+
+    <!-- Macro for inertia matrix -->
+
+    <!-- 定义一个名为 "sphere_inertial_matrix" 的宏，用于生成球体的惯性矩 -->
+    <!-- 参数 "m" 表示球体质量，"r" 表示球体半径 -->
+    <xacro:macro name = "sphere_inertial_matrix" params = "m r">
+        <!-- 定义惯性参数 -->
+        <inertial>
+            <!-- 设置球体的质量 -->
+            <mass value = "${m}" />
+            <!-- 设置球体的惯性矩，根据公式 I = 2/5 * m * r^2 -->
+            <inertia ixx = "${2*m*r*r/5}" ixy = "0" ixz = "0"
+                iyy = "${2*m*r*r/5}" iyz = "0" 
+                izz = "${2*m*r*r/5}" />
+        </inertial>
+    </xacro:macro>
+
+    <!-- 定义一个名为 "cylinder_inertial_matrix" 的宏，用于生成圆柱体的惯性矩 -->
+    <!-- 参数 "m" 表示圆柱体质量，"r" 表示圆柱体半径，"h" 表示圆柱体高度 -->
+    <xacro:macro name = "cylinder_inertial_matrix" params = "m r h">
+        <!-- 定义惯性参数 -->
+        <inertial>
+            <!-- 设置圆柱体的质量 -->
+            <mass value = "${m}" />
+            <!-- 设置圆柱体的惯性矩 -->
+            <!-- ixx 和 iyy 的计算公式为 I = m * (3*r^2 + h^2) / 12 -->
+            <!-- izz 的计算公式为 I = 1/2 * m * r^2 -->
+            <inertia ixx = "${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
+                iyy = "${m*(3*r*r+h*h)/12}" iyz = "0"
+                izz = "${m*r*r/2}" /> 
+        </inertial>
+    </xacro:macro>
+
+    <!-- 定义一个名为 "Box_inertial_matrix" 的宏，用于生成长方体的惯性矩 -->
+    <!-- 参数 "m" 表示长方体质量，"l" 表示长度，"w" 表示宽度，"h" 表示高度 -->
+    <xacro:macro name = "Box_inertial_matrix" params = "m l w h">
+       <!-- 定义惯性参数 -->
+       <inertial>
+           <!-- 设置长方体的质量 -->
+           <mass value = "${m}" />
+           <!-- 设置长方体的惯性矩 -->
+           <!-- ixx 的计算公式为 I = m * (h^2 + l^2) / 12 -->
+           <!-- iyy 的计算公式为 I = m * (w^2 + l^2) / 12 -->
+           <!-- izz 的计算公式为 I = m * (w^2 + h^2) / 12 -->
+           <inertia ixx = "${m*(h*h + l*l)/12}" ixy = "0" ixz = "0"
+               iyy = "${m*(w*w + l*l)/12}" iyz = "0"
+               izz = "${m*(w*w + h*h)/12}" />
+       </inertial>
+   </xacro:macro>
+</robot>

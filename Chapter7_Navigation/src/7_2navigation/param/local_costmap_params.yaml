@@ -1,0 +1,14 @@
+local_costmap:  # 配置局部代价地图（local_costmap）的参数
+
+  global_frame: odom  # 局部代价地图的参考坐标系，通常使用 "odom"（里程计坐标系），以应对动态环境中的机器人运动
+  robot_base_frame: base_footprint  # 机器人底座的坐标系，通常是机器人几何中心的参考坐标系
+
+  update_frequency: 10.0  # 地图更新频率（单位：Hz），表示局部代价地图每秒刷新 10 次
+  publish_frequency: 10.0  # 地图发布频率（单位：Hz），控制局部代价地图数据发布给其他模块的频率
+  transform_tolerance: 0.5  # 坐标变换的时间容差（单位：秒），用于容忍坐标变换中的延迟
+
+  static_map: false  # 是否使用静态地图，局部地图通常设置为 false，允许地图动态更新
+  rolling_window: true  # 启用滚动窗口模式，表示局部地图随机器人移动而动态调整，始终以机器人为中心
+  width: 3  # 局部地图的宽度（单位：米），表示地图的横向覆盖范围
+  height: 3  # 局部地图的高度（单位：米），表示地图的纵向覆盖范围
+  resolution: 0.05  # 地图分辨率（单位：米/格），每个栅格代表 0.05 米的真实距离

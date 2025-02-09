@@ -1,0 +1,14 @@
+<launch>
+    <!-- 发布方 使用静态坐标变换分布 直接通过.launch文件启动 省去编写代码 -->
+
+    <!--  args 参数用于给节点传递启动时的命令行参数。      
+    0.2 0.8 0.3：表示平移 (x, y, z) 坐标，即 son1 在 world 坐标系中的位置。    
+    0 0 0：表示旋转 (roll, pitch, yaw)，这里是零旋转。    
+    /world/son1：表示父坐标系和子坐标系，即在 /world 坐标系下发布 son1 的位置。  
+    -->
+    <node pkg = "tf2_ros" type = "static_transform_publisher" name = "son1" args = "0.2 0.8 0.3 0 0 0 /world/son1" output = "screen" />
+    <node pkg = "tf2_ros" type = "static_transform_publisher" name = "son2" args = "0.5 0 0 0 0 0 /world/son2" output = "screen" />
+
+    <!-- 订阅方 -->
+    <node pkg = "5_1_4multiTrans" type = "sub_frames" name = "sub_frames" output = "screen" />
+</launch>

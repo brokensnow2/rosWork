@@ -1,0 +1,10 @@
+<launch>
+
+    <!-- 设置参数 固定写法 -->
+    <!-- textfile 是一个特殊的用法，用来加载一个文件的内容作为参数值，尤其是用来加载 URDF 文件或类似的配置文件。 -->
+    <param name="robot_description" textfile="$(find 6_2urdf_rviz)/urdf/urdf/demo02_link.urdf" />
+
+    <!-- 启动 rviz  -d 参数用于指定 RViz 启动时加载的配置文件 -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find 6_2urdf_rviz)/config/rviz/show_mycar.rviz" />
+
+</launch>

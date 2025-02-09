@@ -1,0 +1,58 @@
+<robot name="my_sensors" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- 雷达传感器配置 -->
+  <gazebo reference="laser">
+    <!-- 定义传感器类型为激光雷达（ray）并命名为 rplidar -->
+    <sensor type="ray" name="rplidar">
+      <!-- 设置传感器的位姿，格式为 x y z roll pitch yaw -->
+      <pose>0 0 0 0 0 0</pose>
+      <!-- 是否在仿真环境中可视化激光雷达 -->
+      <visualize>true</visualize>
+      <!-- 设置传感器的更新频率，单位为 Hz -->
+      <update_rate>5.5</update_rate>
+      
+      <ray>
+        <scan>
+          <horizontal>
+            <!-- 激光雷达的水平扫描样本数(旋转一周采样的样本数) -->
+            <samples>360</samples>
+            <!-- 每个样本的分辨率 -->
+            <resolution>1</resolution>
+            <!-- 激光雷达扫描的最小角度，单位为弧度 -->
+            <min_angle>-3</min_angle>
+            <!-- 激光雷达扫描的最大角度，单位为弧度 -->
+            <max_angle>3</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <!-- 激光雷达的最小测量距离，单位为米 -->
+          <min>0.10</min>
+          <!-- 激光雷达的最大测量距离，单位为米 -->
+          <max>30.0</max>
+          <!-- 距离测量的分辨率 -->
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <!-- 噪声类型设置为高斯分布 -->
+          <type>gaussian</type>
+          <!-- 噪声的均值 -->
+          <mean>0.0</mean>
+          <!-- 噪声的标准差 -->
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      
+
+      <!-- 重要！！！ -->
+
+      <!-- 插件配置 -->
+      <plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
+        <!-- 设置激光雷达的 ROS 话题名称 -->
+        <topicName>/scan</topicName>
+        <!-- 设置激光雷达的坐标系名称 为了使雷达传感器和物理雷达模型在同一个位置 -->
+        <frameName>laser</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

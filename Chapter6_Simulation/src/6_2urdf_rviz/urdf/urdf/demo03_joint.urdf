@@ -1,0 +1,62 @@
+<!-- 
+    需求: 创建机器人模型，底盘为长方体，
+         在长方体的前面添加一摄像头，
+         摄像头可以沿着 Z 轴 360 度旋转
+
+ -->
+<robot name = "mycar">
+    <!-- 底盘 -->
+    <link name  =  "base_link" >
+        <visual>
+            <geometry>
+                <box size  =  "0.5 0.2 0.1" />
+            </geometry>
+
+            <!-- xyz是相对于父级(world)的坐标偏移 -->
+            <origin xyz  =  "0 0 0" rpy  =  "0 0 0" />
+            <material name  =  "blue">
+                <color rgba  =  "0 0 1.0 0.5" />
+            </material>
+        </visual>
+    </link>
+
+    <!-- 摄像头 -->
+    <link name  =  "camera">
+        <visual>
+            <geometry>
+                <box size  =  "0.02 0.05 0.05" />
+            </geometry>
+
+            <!-- 
+            xyz是相对于父级的偏移
+            base_link是camera的父级，base_link在world的中心(0, 0, 0)，
+            而且在关节处： <origin xyz  =  "0.2 0 0.075" rpy  =  "0 0 0" />
+            camera已经相当于在父级中心(0, 0, 0)偏移了(0.2, 0, 0.075)
+            然后camera的origin xyz  =  "0 0 0" rpy  =  "0 0 0" />是在上面的基础上再偏移(0, 0, 0.1s)
+             -->
+            <!-- 
+            xyz 是相对于父级的偏移
+            - base_link 是 camera 的父级，且 base_link 位于世界坐标系的原点 (0, 0, 0)。
+            - 在关节 camera2baselink 中，通过 `<origin xyz="0.2 0 0.075" rpy="0 0 0" />` 定义了子链接 camera 的原点相对于父链接 base_link 的偏移量。
+            - 这意味着 camera 的参考点初步偏移到了世界坐标系的 (0.2, 0, 0.075)。
+            - camera 的 `<origin xyz="0 0 0.1" rpy="0 0 0" />` 表示摄像头的几何中心在参考点的基础上又沿 Z 轴向上偏移了 0.1。
+            - 综合来看，camera 的几何中心最终位于世界坐标系中的 (0.2, 0, 0.175)。
+            -->
+            <origin xyz  =  "0 0 0.1" rpy  =  "0 0 0" />
+            <material name  =  "red">
+                <color rgba  =  "1 0 0 0.5" />
+            </material>
+        </visual>
+    </link>
+
+    <!-- 关节 -->
+    <joint name  =  "camera2baselink" type  =  "continuous">
+        <parent link  =  "base_link"/>
+        <child link  =  "camera" />
+        <!-- 需要计算两个 link 的物理中心之间的偏移量 -->
+        <origin xyz  =  "0.2 0 0.075" rpy  =  "0 0 0" />
+        <!-- 旋转轴 -->
+        <axis xyz  =  "0 0 1" />
+    </joint>
+
+</robot>

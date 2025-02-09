@@ -1,0 +1,54 @@
+<!-- 采用amcl自带示例的launch文件：/opt/ros/noetic/share/amcl/examples/amcl_diff.launch(差速小车适用) -->
+
+<launch>
+
+  <!-- 启动 amcl 节点，用于自适应蒙特卡洛定位 (Adaptive Monte Carlo Localization) -->
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+
+    <!-- 设置 AMCL 以最大 10 Hz 的频率从最佳位姿发布激光扫描数据 -->
+
+    <!-- 指定里程计模型类型为差分驱动 (differential drive) -->
+    <param name="odom_model_type" value="diff"/> 
+    <!-- 用于 AMCL 中里程计模型的噪声参数 -->
+    <param name="odom_alpha5" value="0.1"/> 
+    <!-- GUI 发布的更新频率，单位 Hz -->
+    <param name="gui_publish_rate" value="10.0"/> 
+    <!-- 用于激光传感器建模的最大激光束数量 -->
+    <param name="laser_max_beams" value="30"/> 
+    <!-- 最小粒子数，粒子滤波器的最低限制 -->
+    <param name="min_particles" value="500"/> 
+    <!-- 最大粒子数，粒子滤波器的最高限制 -->
+    <param name="max_particles" value="5000"/>
+    <!-- KLD (Kullback-Leibler Divergence) 采样算法的误差限制 -->
+    <param name="kld_err" value="0.05"/> 
+    <!-- KLD 采样中分布置信度的 Z 值 -->
+    <param name="kld_z" value="0.99"/> 
+    <!-- 用于 AMCL 中里程计模型的旋转运动噪声参数 -->
+    <param name="odom_alpha1" value="0.2"/> 
+    <!-- 用于 AMCL 中里程计模型的平移运动噪声参数 -->
+    <param name="odom_alpha2" value="0.2"/> 
+    <!-- *************************************分割线***************************************** -->
+
+    <!-- 用于 AMCL 中里程计模型的平移-旋转噪声参数 -->
+
+    <!-- 平移运动引起的旋转噪声 -->
+    <param name="odom_alpha3" value="0.8"/> 
+    <param name="odom_alpha4" value="0.2"/> <!-- 旋转运动引起的平移噪声 -->
+    <param name="laser_z_hit" value="0.5"/> <!-- 激光模型中正确命中 (hit) 的权重 -->
+    <param name="laser_z_short" value="0.05"/> <!-- 激光模型中短射程 (short) 的权重 -->
+    <param name="laser_z_max" value="0.05"/> <!-- 激光模型中最大射程 (max) 的权重 -->
+    <param name="laser_z_rand" value="0.5"/> <!-- 激光模型中随机测量 (random) 的权重 -->
+    <param name="laser_sigma_hit" value="0.2"/> <!-- 激光模型中正确命中的标准差 -->
+    <param name="laser_lambda_short" value="0.1"/> <!-- 激光模型中短射程测量的指数分布参数 -->
+    <param name="laser_model_type" value="likelihood_field"/> <!-- 激光模型类型，使用似然场模型 -->
+    <!-- <param name="laser_model_type" value="beam"/> --> <!-- 激光模型类型，替代为基于光束的模型（注释掉的备用选项） -->
+    <param name="laser_likelihood_max_dist" value="2.0"/> <!-- 似然场模型中用于计算概率的最大距离 -->
+    <param name="update_min_d" value="0.2"/> <!-- 位姿更新的最小平移距离 -->
+    <param name="update_min_a" value="0.5"/> <!-- 位姿更新的最小旋转角度 -->
+    <param name="odom_frame_id" value="odom"/> <!-- 里程计帧的名称 -->
+    <param name="resample_interval" value="1"/> <!-- 重新采样的时间间隔 -->
+    <param name="transform_tolerance" value="0.1"/> <!-- 坐标变换的容忍时间，单位秒 -->
+    <param name="recovery_alpha_slow" value="0.0"/> <!-- 慢速恢复粒子滤波器参数 -->
+    <param name="recovery_alpha_fast" value="0.0"/> <!-- 快速恢复粒子滤波器参数 -->
+  </node>
+</launch>
