@@ -5,3 +5,6 @@
 ## move_base 功能
 - 方框里是move_base主要完成的工作
 ![alt text](./imgs/overview_tf.png)
+
+## 局部规划器
+![alt text](./imgs/local_plan.png)

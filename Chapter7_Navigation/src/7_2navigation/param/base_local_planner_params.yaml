@@ -1,4 +1,4 @@
-TrajectoryPlannerROS:  # TrajectoryPlannerROS 模块的配置，主要用于轨迹规划
+TrajectoryPlannerROS:  # TrajectoryPlannerROS 模块的配置，主要用于轨迹规划，用DWA实现
 
 # Robot Configuration Parameters
   max_vel_x: 0.5  # 机器人前进方向的最大线速度（单位：米/秒）
